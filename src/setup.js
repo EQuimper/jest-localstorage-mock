@@ -1,4 +1,16 @@
 import { LocalStorage } from './localstorage';
 
-global.localStorage = new LocalStorage(jest);
-global.sessionStorage = new LocalStorage(jest);
+if (typeof global._localStorage !== 'undefined') {
+  Object.defineProperty(global, '_localStorage', {
+    value: new LocalStorage(jest),
+  });
+} else {
+  global.localStorage =  new LocalStorage(jest);
+}
+ if (typeof global._sessionStorage !== 'undefined') {
+  Object.defineProperty(global, '_sessionStorage', {
+    value: new LocalStorage(jest),
+  });
+} else {
+  global.sessionStorage =  new LocalStorage(jest);
+}
